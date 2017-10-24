@@ -8,15 +8,15 @@ public class SplayTree<T> {
 	private Comparator<T> comparator;
 	
 	/**
-	 * Inicializa el comparador y la prioridad m·xima.
-	 * @param maxPriority Prioridad m·xima a la que se puede llegar. 
+	 * Inicializa el comparador y la prioridad m√°xima.
+	 * @param maxPriority Prioridad m√°xima a la que se puede llegar. 
 	 */
 	public SplayTree(Comparator<T> comparator){
 		this.comparator = comparator;
 	}
 	
 	/**
-	 * Comprueba si el arbol est· vacio.
+	 * Comprueba si el arbol est√° vacio.
 	 * @return true, si root esta nulo.
 	 */
 	public boolean isEmpty(){
@@ -24,8 +24,8 @@ public class SplayTree<T> {
 	}
 
 	/**
-	 * Lanzador del mÈtodo recursivo para insertar.
-	 * @param info InformaciÛn a ser insertada
+	 * Lanzador del m√©todo recursivo para insertar.
+	 * @param info Informaci√≥n a ser insertada
 	 */
 	public void add(T info){
 		if(root == null){
@@ -36,8 +36,8 @@ public class SplayTree<T> {
 	}
 	
 	/**
-	 * MÈtodo recursivo para insertar.
-	 * @param info InformaciÛn a ser insertada.
+	 * M√©todo recursivo para insertar.
+	 * @param info Informaci√≥n a ser insertada.
 	 * @param node Nodo actual.
 	 */
 	public void addIn(T info, Node<T> node){
@@ -51,54 +51,58 @@ public class SplayTree<T> {
 		root = splay(root, info);
 	}
 	
+	/**
+	 * M√©todo recursivo para el biselado.
+	 * @param info Informaci√≥n a ser insertada.
+	 * @param node Nodo actual.
+	 * @return la raiz con los cambios hechos.
+	 */
 	private Node<T> splay(Node<T> node, T info) {
-        if (node == null) return null;
+        	if (node == null) return null;
 
-        if (comparator.compare(info, node.info) < 0) {
-            if (node.left == null) {
-                return node;
-            }
-            int cmp2 = comparator.compare(info, node.left.info);
-            if (cmp2 < 0) {
-                node.left.left = splay(node.left.left, info);
-                node = rotateRight(node);
-            }
-            else if (cmp2 > 0) {
-                node.left.right = splay(node.left.right, info);
-                if (node.left.right != null)
-                    node.left = rotateLeft(node.left);
-            }
-            
-            if (node.left == null) return node;
-            else                return rotateRight(node);
-        }
+		if (comparator.compare(info, node.info) < 0) {
+		    if (node.left == null) {
+			return node;
+		    }
+		    int cmp2 = comparator.compare(info, node.left.info);
+		    if (cmp2 < 0) {
+			node.left.left = splay(node.left.left, info);
+			node = rotateRight(node);
+		    }
+		    else if (cmp2 > 0) {
+			node.left.right = splay(node.left.right, info);
+			if (node.left.right != null)
+			    node.left = rotateLeft(node.left);
+		    }
 
-        else if (comparator.compare(info, node.info) > 0) { 
-            if (node.right == null) {
-                return node;
-            }
+		    if (node.left == null) return node;
+		    else                return rotateRight(node);
+		} else if (comparator.compare(info, node.info) > 0) { 
+		    if (node.right == null) {
+			return node;
+		    }
 
-            int cmp2 = comparator.compare(info, node.right.info);
-            if (cmp2 < 0) {
-                node.right.left  = splay(node.right.left, info);
-                if (node.right.left != null)
-                    node.right = rotateRight(node.right);
-            }
-            else if (cmp2 > 0) {
-                node.right.right = splay(node.right.right, info);
-                node = rotateLeft(node);
-            }
-            
-            if (node.right == null) return node;
-            else return rotateLeft(node);
-        }else{
-        	return node;
-        }
+		    int cmp2 = comparator.compare(info, node.right.info);
+		    if (cmp2 < 0) {
+			node.right.left  = splay(node.right.left, info);
+			if (node.right.left != null)
+			    node.right = rotateRight(node.right);
+		    }
+		    else if (cmp2 > 0) {
+			node.right.right = splay(node.right.right, info);
+			node = rotateLeft(node);
+		    }
+
+		    if (node.right == null) return node;
+		    else return rotateLeft(node);
+		}else{
+			return node;
+		}
 	}
 
 	/**
 	 * Rota los elementos a la derecha.
-	 * @param node Nodo raÌz sobre el que se va a realizar la rotaciÛn.
+	 * @param node Nodo ra√≠z sobre el que se va a realizar la rotaci√≥n.
 	 */
 	private Node<T> rotateRight(Node<T> node) {
 		Node<T> aux = node.left;
@@ -109,7 +113,7 @@ public class SplayTree<T> {
 
 	/**
 	 * Rota los elementos a la izquierda.
-	 * @param node Nodo raÌz sobre el que se va a realizar la rotaciÛn.
+	 * @param node Nodo ra√≠z sobre el que se va a realizar la rotaci√≥n.
 	 */
 	private Node<T> rotateLeft(Node<T> node) {
 		Node<T> aux = node.right;
